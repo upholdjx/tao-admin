@@ -11,11 +11,14 @@ process.env.VUE_APP_VERSION = require('./package.json').version
 process.env.VUE_APP_BUILD_TIME = require('dayjs')().format('YYYY-M-D HH:mm:ss')
 
 // 基础路径 注意发布之前要先修改这里
-let publicPath = process.env.VUE_APP_PUBLIC_PATH || '/'
+let publicPath = process.env.NODE_ENV === 'development' ? '/' : './.'
 
 module.exports = {
   // 根据你的实际情况更改这里
   publicPath,
+  outputDir: 'dist',
+  assetsDir: 'static',
+  productionSourceMap: false,
   lintOnSave: true,
   devServer: {
     publicPath // 和 publicPath 保持一致
@@ -49,7 +52,7 @@ module.exports = {
         matchColors: [
           ...forElementUI.getElementUISeries(process.env.VUE_APP_ELEMENT_COLOR) // Element-ui主色系列
         ],
-        externalCssFiles: [ './node_modules/element-ui/lib/theme-chalk/index.css' ], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
+        externalCssFiles: ['./node_modules/element-ui/lib/theme-chalk/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
         changeSelector: forElementUI.changeSelector
       }])
     config
